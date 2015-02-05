@@ -1,11 +1,29 @@
 
 <h1><%= @article.title %></h1>
-<p><%= @article.body %></p><br>
+
+<p><% if @article.image.exists? %>
+        <%= image_tag @article.image.url(:medium) %><br/>
+    <% end %>
+</p>
+
+
+<p><b><%= @article.body %></b></p><br>
+<hr>
+<p>
+  <b>Tags:</b>
+  <% @article.tags.each do |tag| %>
+    <%= link_to tag.name, tag_path(tag) %>
+  <% end %>
+</p>
+
+
+
+<hr>
 
 <h3>Comments (<%= @article.comments.size %>)</h3>
 <%= render partial: 'articles/comment', collection: @article.comments %>
 
-<br>
+<br><hr>
 <h3>Post a Comment</h3>
 <%= render partial: 'comments/form' %>
 <hr>
